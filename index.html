@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            border: 1px solid black;
+            padding:10px
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="content"></div>
+    </div>
+
+    <!-- jquery CDN from google hosted libraries-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script>
+        //we want to load some content into the content area
+        var oset = 0;       //start at 0
+        var iload = 1;      //the numer of items we're gonna load
+        var holdload = false;
+        $(function(){
+        //function that will load whenever the page load
+            loadArt(5);
+        });
+        
+
+        //scroll detection
+        $(window).scroll(function(){
+            if($(window).scrollTop() >= $(document).height()-$(window).height()-100){loadArt(1);
+            }
+        })
+
+        function loadArt(a){
+            if(!holdload){
+                var holder = {iload:a, oset:oset};
+                console.log(holder);
+                holdload = true;
+                $.ajax({
+                    url:"api.php",       //where the api endpoint is located
+                    type:"POST",        //type of call
+                    data:holder,      //info for data
+                    dataType:"json",            //la y3rf eno he expcet json formatted data
+                    success:function(data){
+                        console.log(data);
+                        for(var i=0; i<data.content.length; i++){
+                            oset++;
+                            var item = data.content[i];
+                            var html = '<div class="box">'+item.id+''+item.content+''+item.date+'</div>';
+                            $('#content').append(html);
+                        }
+                        holdload = false;
+                        if(data.content.length == 0){holdload = true;}
+                    }
+                })
+            }
+        }
+        
+    </script>
+</body>
+</html>
