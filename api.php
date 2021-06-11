@@ -10,7 +10,7 @@ else{
     $vlimit = $_POST['iload'];
 }
 
-if(isset($_POST['oset'])){         //checks whether the variable oset is set ///and is not NULL
+if(isset($_POST['oset'])){         //checks whether the variable oset is set and is not NULL
    $oset = $_POST['oset'];
 }
 else{
@@ -30,13 +30,15 @@ $result = $link->query($query);
 
 //hek we loop and build up the array of content la2en it return rows
 while($row = $result->fetch_array()){
+    //echo strtotime($row['date']);
+    //exit;
     $myRow[] = array(
         "id" => $row['id'],
         "content" => $row['content'],
-        "date" => $row['date']
+        "date" => date('m/d/Y', strtotime($row['date']))
     );
 }
 
-$myArray['content'] = $myRow; //b2alba l array of content that is returned for
+$myArray['content'] = $myRow; //b2alba l array of content that is returned fo2
 
 echo json_encode($myArray);  //to encode an associative array into a JSON object

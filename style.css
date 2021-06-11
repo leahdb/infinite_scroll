@@ -1,0 +1,17 @@
+html{
+    background-color: rgb(252, 241, 228);
+}
+
+.box{
+    background-color: #fbeec1 ;
+    border: 3px dashed #daad86 ;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+h1{
+    padding: 50px;
+    text-align: center;
+    color: #8d8741;
+    font-family: sans-serif;
+}
